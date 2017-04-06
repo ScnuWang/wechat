@@ -1,0 +1,4 @@
+#忽略jar包，classes文件
+*.jar
+*.classes
+/.idea
