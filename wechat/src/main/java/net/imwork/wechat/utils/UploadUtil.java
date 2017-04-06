@@ -36,7 +36,7 @@ public class UploadUtil {
             uploadConn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             // 获取媒体文件上传的输出流（往微信服务器写数据）
             OutputStream outputStream = uploadConn.getOutputStream();
-            //如果文件是从本地获取不需要这里
+
             URL mediaUrl = new URL(mediaFileUrl);
             HttpURLConnection meidaConn = (HttpURLConnection) mediaUrl.openConnection();
             meidaConn.setDoOutput(true);
@@ -73,8 +73,7 @@ public class UploadUtil {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuffer buffer = new StringBuffer();
             String str = null;
-            while ((str = bufferedReader.readLine()) != null)
-            {
+            while ((str = bufferedReader.readLine()) != null) {
                 buffer.append(str);
             }
             bufferedReader.close();
@@ -102,7 +101,6 @@ public class UploadUtil {
         } catch (Exception e) {
             e.printStackTrace();
             media_id = null;
-            System.out.println("上传临时媒体文件失败：{}");
         }
         return media_id;
     }

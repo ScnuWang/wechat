@@ -27,8 +27,9 @@ public class MenuController {
 
     @RequestMapping("/addTempMaterial")
     public void addTempMaterial(){
+        //这个地址为可访问的网上的图片地址，可以是通过外网映射的本服务器的地址
         String accessToken = tokenService.getTToken(1).getAccesstoken();
-        String mediaFileUrl = ""; //这个地址为可访问的网上的图片地址，可以是通过外网映射的本服务器的地址
+        String mediaFileUrl = "http://1670a21b58.imwork.net/wechat/picture/timg.jpg";
         String type = "image";
         String media_id = UploadUtil.uploadMediaTemp(accessToken,type,mediaFileUrl);
         System.out.println(media_id);

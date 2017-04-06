@@ -30,6 +30,4 @@ public class CommonAPI {
 	/** 新增临时素材*/
 	public static String UPLOAD_MEDIA_URL_TEMP = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
 
-	/**新增永久非图文素材：新接口，永久素材*/
-	public static final String URL_UPLOAD_MEDIA_PERMANENT = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=";
 }
