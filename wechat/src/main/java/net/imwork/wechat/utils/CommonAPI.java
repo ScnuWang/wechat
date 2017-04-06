@@ -16,6 +16,8 @@ public class CommonAPI {
 	public static String UTF8 = "UTF-8";
 
 	public static String APPID = "wx1b1dc3b5f5ced089";
+	/**接口配置的令牌*/
+	public static String TOKEN = "wechat";
 
 	public static String APPSECRET = "d4624c36b6795d1d99dcf0547af5443d";
 

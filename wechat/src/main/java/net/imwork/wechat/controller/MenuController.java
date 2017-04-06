@@ -8,10 +8,12 @@ import net.imwork.wechat.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -23,6 +25,26 @@ public class MenuController {
 
     @Autowired
     private ITokenService tokenService;
+
+//    @RequestMapping("/wechat")
+    @ResponseBody
+    public String sign ( String signature,String timestamp,String nonce,String echostr ){
+        System.out.println("========接收到微信服务器开发者服务器配置请求===========");
+        String[] strArr = new String[]{CommonAPI.TOKEN,timestamp,nonce};
+        //将token、timestamp、nonce三个参数进行字典序排序
+        Arrays.sort(strArr);
+        //将三个参数字符串拼接成一个字符串
+        StringBuffer buffer = new StringBuffer();
+        for (String string : strArr) {
+            buffer.append(string);
+        }
+        //进行sha1加密并与signature对比
+        if (signature.equals(EncodeUtil.SHA1(buffer.toString()))) {
+            return echostr;
+        }else{
+            return "Hi!brother,What do you want to do?";
+        }
+    }
 
 
     @RequestMapping("/addTempMaterial")
@@ -100,6 +122,7 @@ public class MenuController {
                 1、可以将返回信息存入数据库
                 2、写一个方法用于构建返回的XML消息，记得交换ToUserName和FromUserName
                 3、通过上传文件接口获取MediaId
+                4、用对象封装接收到的消息
              */
             //点击菜单拉取消息时的事件推送：
             if ("3-1".equals(EventKey)){//返回文本消息
@@ -122,7 +145,7 @@ public class MenuController {
                         "</xml>";
             }
             //关键字回复文本
-            if("回复文本消息".equals(Content)){//订阅者发送关键字回复
+            if("关键字".equals(Content)){//订阅者发送关键字回复
                 respxml = "<xml>" +
                         "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
                         "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
@@ -141,6 +164,7 @@ public class MenuController {
                         "</Image>" +
                         "</xml>";
             }
+            //要先设置属性，再给out赋值，不然微信接收中文会乱码
             response.setContentType("application/xml;charset=utf-8");
             out = response.getWriter();
             out.print(respxml);
@@ -153,6 +177,4 @@ public class MenuController {
             }
         }
     }
-
-
 }
