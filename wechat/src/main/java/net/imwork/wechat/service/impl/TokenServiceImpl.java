@@ -37,7 +37,7 @@ public class TokenServiceImpl implements ITokenService {
         Ttoken token = ttokenMapper.selectByTokenType(1);
         if( token == null ){
             try {
-               JsonObject jsonObjectResult =  HttpUtil.httpGet(CommonAPI.TOKENURL.replaceAll("APPID",CommonAPI.APPID).replaceAll("APPSECRET",CommonAPI.APPSECRET));
+               JsonObject jsonObjectResult =  HttpUtil.httpGet(CommonAPI.TOKEN_URL.replaceAll("APPID",CommonAPI.APPID).replaceAll("APPSECRET",CommonAPI.APPSECRET));
                if(jsonObjectResult.get("errcode")==null){
                    String accessToken  = jsonObjectResult.get("access_token").getAsString();
                    String expiresin  = jsonObjectResult.get("expires_in").getAsString();
@@ -63,7 +63,7 @@ public class TokenServiceImpl implements ITokenService {
 
     public Ttoken updateToken(Ttoken token) {
         try {
-            JsonObject jsonObjectResult =  HttpUtil.httpGet(CommonAPI.TOKENURL.replaceAll("APPID",CommonAPI.APPID).replaceAll("APPSECRET",CommonAPI.APPSECRET));
+            JsonObject jsonObjectResult =  HttpUtil.httpGet(CommonAPI.TOKEN_URL.replaceAll("APPID",CommonAPI.APPID).replaceAll("APPSECRET",CommonAPI.APPSECRET));
             if(jsonObjectResult.get("errcode")==null){
                 String accessToken  = jsonObjectResult.get("access_token").getAsString();
                 String expiresin  = jsonObjectResult.get("expires_in").getAsString();

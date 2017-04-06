@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.imwork.wechat.entity.model.*;
 import net.imwork.wechat.service.ITokenService;
-import net.imwork.wechat.utils.CommonAPI;
-import net.imwork.wechat.utils.CreateMenu;
-import net.imwork.wechat.utils.HttpUtil;
-import net.imwork.wechat.utils.XmlUtil;
+import net.imwork.wechat.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +24,16 @@ public class MenuController {
     @Autowired
     private ITokenService tokenService;
 
+
+    @RequestMapping("/addTempMaterial")
+    public void addTempMaterial(){
+        String accessToken = tokenService.getTToken(1).getAccesstoken();
+        String mediaFileUrl = ""; //这个地址为可访问的网上的图片地址，可以是通过外网映射的本服务器的地址
+        String type = "image";
+        String media_id = UploadUtil.uploadMediaTemp(accessToken,type,mediaFileUrl);
+        System.out.println(media_id);
+    }
+
     @RequestMapping("/createmenu")
     public void createMebu(){
         /*
@@ -37,7 +44,7 @@ public class MenuController {
          */
         String menuStr = CreateMenu.createMebu();
         Ttoken token = tokenService.getTToken(1);
-        String url = CommonAPI.CREATEMENUURL.replaceAll(CommonAPI.ACCESS_TOKEN,token.getAccesstoken());
+        String url = CommonAPI.CREATE_MENU_URL.replaceAll(CommonAPI.ACCESS_TOKEN,token.getAccesstoken());
         JsonObject result = HttpUtil.httpsRequest(url,"POST",menuStr);
         if (result != null && result.get("errcode") != null &&result.get("errcode").getAsInt() == 0){
             System.out.println("菜单创建成功");
@@ -45,7 +52,8 @@ public class MenuController {
             System.out.println("菜单创建失败");
         }
     }
-    //点击菜单拉取消息时的事件推送：服务器地址和配置的地址一致
+
+    //服务器地址和配置的地址一致
     @RequestMapping("/wechat")
     public void menuEvent(HttpServletRequest request, HttpServletResponse response){
         /*
@@ -68,28 +76,73 @@ public class MenuController {
             inputStreamReader.close();
             is.close();
             String reqPram = sb.toString().replace("<![CDATA[", "").replace("]]>", "");
-            System.out.println(reqPram);
             Map reqMap = XmlUtil.xmlToMap(reqPram);
 
             //获取发送者以及接收者
-            String toUser = "";
-            String FromUser = "";
+            String toUser = "";//发送人
+            String FromUser = "";//接收人
+            String EventKey = "";//按钮的id
+            String respxml = "";//响应的内容
+            String MsgType = "";//消息类型
+            String Content = "";//消息内容（关键字）
+            String MediaId = "";//消息内容为图片时的id（关键字）
             if (reqMap!=null){
-                toUser = (String) reqMap.get("reqMap");
-                FromUser = (String) reqMap.get("FromUser");
+                toUser = (String) reqMap.get("ToUserName");
+                FromUser = (String) reqMap.get("FromUserName");
+                EventKey = (String) reqMap.get("EventKey");
+                Content = (String) reqMap.get("Content");
+                MsgType = (String) reqMap.get("MsgType");
+                MediaId = (String) reqMap.get("MediaId");
             }
             //组装返回的信息
-            String respxml = "<xml>" +
-                    "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
-                    "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
-                    "<CreateTime>12345678</CreateTime>" +
-                    "<MsgType><![CDATA[text]]></MsgType>" +
-                    "<Content><![CDATA[你好]]></Content>" +
-                    "</xml>";
+            /*  优化：
+                1、可以将返回信息存入数据库
+                2、写一个方法用于构建返回的XML消息，记得交换ToUserName和FromUserName
+                3、通过上传文件接口获取MediaId
+             */
+            //点击菜单拉取消息时的事件推送：
+            if ("3-1".equals(EventKey)){//返回文本消息
+                respxml = "<xml>" +
+                        "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
+                        "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
+                        "<CreateTime>12345678</CreateTime>" +
+                        "<MsgType><![CDATA[text]]></MsgType>" +
+                        "<Content><![CDATA[你好,ImWork]]></Content>" +
+                        "</xml>";
+            }else if ("3-3".equals(EventKey)){//返回图片消息：MediaId是在微信的测试接口上传的临时图片
+                respxml = "<xml>" +
+                        "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
+                        "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
+                        "<CreateTime>12345678</CreateTime>" +
+                        "<MsgType><![CDATA[image]]></MsgType>" +
+                        "<Image>" +
+                        "<MediaId><![CDATA[dPEKw5MyWl2ra8dIdB9gdd3PjFoSwRHdP3nlKZokAXSBwwJpf42e3MCMZwOyaaDP]]></MediaId>" +
+                        "</Image>" +
+                        "</xml>";
+            }
+            //关键字回复文本
+            if("回复文本消息".equals(Content)){//订阅者发送关键字回复
+                respxml = "<xml>" +
+                        "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
+                        "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
+                        "<CreateTime>12345678</CreateTime>" +
+                        "<MsgType><![CDATA[text]]></MsgType>" +
+                        "<Content><![CDATA[你好,ImWork，我正在做微信公众号开发]]></Content>" +
+                        "</xml>";
+            }else if("image".equals(MsgType)){//订阅者发送什么图片回复什么图片
+                respxml = "<xml>" +
+                        "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
+                        "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
+                        "<CreateTime>12345678</CreateTime>" +
+                        "<MsgType><![CDATA[image]]></MsgType>" +
+                        "<Image>" +
+                        "<MediaId><![CDATA["+MediaId+"]]></MediaId>" +
+                        "</Image>" +
+                        "</xml>";
+            }
             response.setContentType("application/xml;charset=utf-8");
             out = response.getWriter();
             out.print(respxml);
-            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -99,4 +152,6 @@ public class MenuController {
             }
         }
     }
+
+
 }

@@ -40,7 +40,7 @@ public class XmlUtil {
     }
 
     public static Map xmlToMap(String xml){
-        if (StringUtils.isNotEmpty(xml)){
+        if (StringUtils.isEmpty(xml)){
             return null;
         }
         SAXReader saxReader = new SAXReader();

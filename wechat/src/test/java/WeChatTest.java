@@ -4,6 +4,7 @@ import net.imwork.wechat.entity.model.*;
 import net.imwork.wechat.service.ITokenService;
 import net.imwork.wechat.utils.CommonAPI;
 import net.imwork.wechat.utils.HttpUtil;
+import net.imwork.wechat.utils.UploadUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -24,45 +25,35 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring.xml","classpath:spring-mybatis.xml"})
-public class TokenTest {
+public class WeChatTest {
 
     @Autowired
     private ITokenService tokenService;
+    /*
+        临时文件上传
+     */
+    @Test
+    public void testupload(){
+        String accessToken = tokenService.getTToken(1).getAccesstoken();
+        String mediaFileUrl = "http://1670a21b58.imwork.net/wechat/picture/timg.jpg";
+        String type = "image";
+        String media_id = UploadUtil.uploadMediaTemp(accessToken,type,mediaFileUrl);
+        System.out.println(media_id);
+    }
 
+
+    /**
+     * 获取token
+     */
     @Test
     public void testToken(){
         Ttoken token = tokenService.getTToken(1);
         System.out.println(token);
     }
 
-    @Test
-    public void  testEvent(){
-
-        String xml  = "<xml>" +
-                "<ToUserName><![CDATA[toUser]]></ToUserName>" +
-                "<FromUserName><![CDATA[FromUser]]></FromUserName>" +
-                "<CreateTime>123456789</CreateTime>" +
-                "<MsgType><![CDATA[event]]></MsgType>" +
-                "<Event><![CDATA[CLICK]]></Event>" +
-                "<EventKey><![CDATA[EVENTKEY]]></EventKey>" +
-                "</xml>";
-        SAXReader saxReader = new SAXReader();
-        try {
-            Document document = saxReader.read((new ByteArrayInputStream(xml.getBytes("UTF-8"))));
-            Element root = document.getRootElement();
-            List<Element> elementList  = root.elements();
-            for (Element e: elementList) {
-                System.out.println(e.getName());
-                System.out.println(e.getText());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
+    /**
+     * 创建菜单
+     */
     @Test
     public void testCreatemenu(){
         createMebu();
@@ -95,9 +86,14 @@ public class TokenTest {
         button32.setType("view");
         button32.setUrl("http://www.365yg.com/item/6405128177852613122/");
 
+        ClickButton button33 = new ClickButton();
+        button33.setName("个人简历");
+        button33.setType("click");
+        button33.setKey("3-3");
+
         ComplexButton button3 = new ComplexButton();
         button3.setName("商务合作");
-        button3.setSub_button(new Button[]{button31,button32});
+        button3.setSub_button(new Button[]{button31,button32,button33});
 
         Menu menu = new Menu();
         menu.setButton(new Button[]{button1,button2,button3});
@@ -107,13 +103,13 @@ public class TokenTest {
         System.out.println(menustr);
         Ttoken token = tokenService.getTToken(1);
         System.out.println(token);
-        String url = CommonAPI.CREATEMENUURL.replaceAll(CommonAPI.ACCESS_TOKEN,token.getAccesstoken());
+        String url = CommonAPI.CREATE_MENU_URL.replaceAll(CommonAPI.ACCESS_TOKEN,token.getAccesstoken());
 
         JsonObject result = HttpUtil.httpsRequest(url,"POST",menustr);
         if (result != null && result.get("errcode") != null &&result.get("errcode").getAsInt() == 0){
-            System.out.println("菜单创建成功");
+            System.out.println("菜单创建成功："+result.get("errmsg").getAsString());
         }else{
-            System.out.println("菜单创建失败");
+            System.out.println("菜单创建失败："+result.get("errmsg").getAsString());
         }
     }
 
