@@ -6,6 +6,7 @@ import net.imwork.wechat.utils.CommonAPI;
 import net.imwork.wechat.utils.DownloadUtil;
 import net.imwork.wechat.utils.HttpUtil;
 import net.imwork.wechat.utils.UploadUtil;
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -26,6 +27,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring.xml","classpath:spring-mybatis.xml"})
 public class WeChatTest {
+    private static Logger logger = Logger.getLogger(WeChatTest.class);
 
     @Autowired
     private ITokenService tokenService;
@@ -70,8 +72,11 @@ public class WeChatTest {
      */
     @Test
     public void testToken(){
+        logger.info("获取凭证");
         Ttoken token = tokenService.getTToken(1);
+        logger.info(token);
         System.out.println(token);
+        logger.error(token.getAccesstoken());
     }
 
     /**
