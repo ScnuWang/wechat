@@ -3,6 +3,7 @@ import com.google.gson.JsonObject;
 import net.imwork.wechat.entity.model.*;
 import net.imwork.wechat.service.ITokenService;
 import net.imwork.wechat.utils.CommonAPI;
+import net.imwork.wechat.utils.DownloadUtil;
 import net.imwork.wechat.utils.HttpUtil;
 import net.imwork.wechat.utils.UploadUtil;
 import org.dom4j.Document;
@@ -15,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -29,11 +29,34 @@ public class WeChatTest {
 
     @Autowired
     private ITokenService tokenService;
+
+    /*
+        永久非图文文件上传
+     */
+    @Test
+    public void testuploadPermanent() throws FileNotFoundException {
+        String accessToken = tokenService.getTToken(1).getAccesstoken();
+        String type = "image";
+        FileInputStream fileInputStream = new FileInputStream(new File("C:\\weixin\\timg.jpg"));
+        String media_id = UploadUtil.uploadMediaPermanent(accessToken,type,"image/jpeg",fileInputStream);
+        System.out.println(media_id);
+        //media_id:blxqqvBBDSUn7aMogFm5MIKvtj_JsoRwdF1k-7DbfTk
+        //url:http://mmbiz.qpic.cn/mmbiz_png/7LxQRFX3cyyWLoYPF1ribhpiaf8md6GWzxlRsax2j8haiaOfm1r8UkT0rASDb0hxFM5fpDv2icFrD7pn2n3TlqpZsw/0?wx_fmt=png
+    }
+    /*
+        获取永久素材列表
+     */
+    @Test
+    public void getuploadPermanent(){
+        String accessToken = tokenService.getTToken(1).getAccesstoken();
+        String string = DownloadUtil.getMediaPermanentList(accessToken,"image",0,10);
+        System.out.println(string);
+    }
     /*
         临时文件上传
      */
     @Test
-    public void testupload(){
+    public void testuploadTemp(){
         String accessToken = tokenService.getTToken(1).getAccesstoken();
         String mediaFileUrl = "http://1670a21b58.imwork.net/wechat/picture/timg.jpg";
         String type = "image";

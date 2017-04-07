@@ -140,7 +140,7 @@ public class MenuController {
                         "<CreateTime>12345678</CreateTime>" +
                         "<MsgType><![CDATA[image]]></MsgType>" +
                         "<Image>" +
-                        "<MediaId><![CDATA[dPEKw5MyWl2ra8dIdB9gdd3PjFoSwRHdP3nlKZokAXSBwwJpf42e3MCMZwOyaaDP]]></MediaId>" +
+                        "<MediaId><![CDATA[blxqqvBBDSUn7aMogFm5MIKvtj_JsoRwdF1k-7DbfTk]]></MediaId>" +
                         "</Image>" +
                         "</xml>";
             }
@@ -161,6 +161,16 @@ public class MenuController {
                         "<MsgType><![CDATA[image]]></MsgType>" +
                         "<Image>" +
                         "<MediaId><![CDATA["+MediaId+"]]></MediaId>" +
+                        "</Image>" +
+                        "</xml>";
+            }else if ("公众号".equals(Content)){
+                respxml = "<xml>" +
+                        "<ToUserName><![CDATA["+FromUser+"]]></ToUserName>" +
+                        "<FromUserName><![CDATA["+toUser+"]]></FromUserName>" +
+                        "<CreateTime>12345678</CreateTime>" +
+                        "<MsgType><![CDATA[image]]></MsgType>" +
+                        "<Image>" +
+                        "<MediaId><![CDATA[blxqqvBBDSUn7aMogFm5MIKvtj_JsoRwdF1k-7DbfTk]]></MediaId>" +
                         "</Image>" +
                         "</xml>";
             }

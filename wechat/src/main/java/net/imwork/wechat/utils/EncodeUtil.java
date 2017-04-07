@@ -49,8 +49,7 @@ public class EncodeUtil {
 	 */
 	public static String SHA(String decript) {
 		try {
-			MessageDigest digest = MessageDigest
-					.getInstance("SHA");
+			MessageDigest digest = MessageDigest.getInstance("SHA");
 			digest.update(decript.getBytes());
 			byte messageDigest[] = digest.digest();
 			// Create Hex String

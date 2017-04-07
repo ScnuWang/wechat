@@ -174,13 +174,4 @@ public class HttpUtil {
         }
         return result;
     }
-
-    public static void main(String[] args) throws IOException {
-        Map<String ,Object> map = new HashMap();
-        map.put("name","冬冬");
-        map.put("age:",26);
-        map.put("level:",1);
-        JsonObject jsonObject = httpPost("http://localhost/analysis_system/show/test",map);
-        System.out.println(jsonObject.toString());
-    }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.imwork.wechat.entity.dao.TtokenMapper" >
+  <resultMap id="BaseResultMap" type="net.imwork.wechat.entity.model.Ttoken" >
+    <id column="pk_id" property="pkId" jdbcType="INTEGER" />
+    <result column="token_type" property="tokenType" jdbcType="INTEGER" />
+    <result column="accesstoken" property="accesstoken" jdbcType="VARCHAR" />
+    <result column="expiresin" property="expiresin" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    pk_id, token_type, accesstoken, expiresin, update_time, remark
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_token
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="net.imwork.wechat.entity.model.Ttoken" >
+    insert into t_token (pk_id, token_type, accesstoken, 
+      expiresin, update_time, remark
+      )
+    values (#{pkId,jdbcType=INTEGER}, #{tokenType,jdbcType=INTEGER}, #{accesstoken,jdbcType=VARCHAR}, 
+      #{expiresin,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="net.imwork.wechat.entity.model.Ttoken" >
+    update t_token
+    set token_type = #{tokenType,jdbcType=INTEGER},
+      accesstoken = #{accesstoken,jdbcType=VARCHAR},
+      expiresin = #{expiresin,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByTokenType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_token
+    where token_type = #{tokenType,jdbcType=INTEGER}
+    limit 1
+  </select>
+
+</mapper>
