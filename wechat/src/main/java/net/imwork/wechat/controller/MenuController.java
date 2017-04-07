@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.imwork.wechat.entity.model.*;
 import net.imwork.wechat.service.ITokenService;
 import net.imwork.wechat.utils.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,15 @@ import java.util.Map;
 @Controller
 public class MenuController {
 
+    private static Logger logger = Logger.getLogger(MenuController.class);
+
     @Autowired
     private ITokenService tokenService;
 
 //    @RequestMapping("/wechat")
     @ResponseBody
     public String sign ( String signature,String timestamp,String nonce,String echostr ){
-        System.out.println("========接收到微信服务器开发者服务器配置请求===========");
+        logger.info("========接收到微信服务器开发者服务器配置请求===========");
         String[] strArr = new String[]{CommonAPI.TOKEN,timestamp,nonce};
         //将token、timestamp、nonce三个参数进行字典序排序
         Arrays.sort(strArr);
@@ -55,6 +58,7 @@ public class MenuController {
         String type = "image";
         String media_id = UploadUtil.uploadMediaTemp(accessToken,type,mediaFileUrl);
         System.out.println(media_id);
+        logger.info(media_id);
     }
 
     @RequestMapping("/createmenu")
@@ -70,8 +74,10 @@ public class MenuController {
         String url = CommonAPI.CREATE_MENU_URL.replaceAll(CommonAPI.ACCESS_TOKEN,token.getAccesstoken());
         JsonObject result = HttpUtil.httpsRequest(url,"POST",menuStr);
         if (result != null && result.get("errcode") != null &&result.get("errcode").getAsInt() == 0){
+            logger.info("菜单创建成功");
             System.out.println("菜单创建成功");
         }else{
+            logger.info("菜单创建失败");
             System.out.println("菜单创建失败");
         }
     }

@@ -1,5 +1,5 @@
 #忽略jar包，classes文件
 *.jar
-*.classes
+*.class
 /.idea
 *.zip

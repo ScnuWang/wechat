@@ -44,12 +44,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeChatTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WeChatTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/WeChatTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="55" column="5" lean-forward="false" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+            <state relative-caret-position="138">
+              <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="70" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MenuController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/imwork/wechat/controller/MenuController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-21">
+              <caret line="77" column="41" lean-forward="true" selection-start-line="77" selection-start-column="41" selection-end-line="77" selection-end-column="41" />
+              <folding>
+                <element signature="docComment;class#MenuController#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,13 +137,13 @@
         <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/EncodeUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/HttpUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/UploadUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/controller/MenuController.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/DownloadUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/CommonAPI.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/java/JavaTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
         <option value="$PROJECT_DIR$/src/test/java/WeChatTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/imwork/wechat/controller/MenuController.java" />
       </list>
     </option>
   </component>
@@ -254,6 +266,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wechat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wechat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imwork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wechat" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -999,7 +1045,7 @@
       <workItem from="1491018996838" duration="17560000" />
       <workItem from="1491357418127" duration="25638000" />
       <workItem from="1491443945560" duration="23586000" />
-      <workItem from="1491529218478" duration="19164000" />
+      <workItem from="1491529218478" duration="19825000" />
     </task>
     <servers />
   </component>
@@ -1036,7 +1082,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88591000" />
+    <option name="totallyTimeSpent" value="89252000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1391,16 +1437,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/imwork/wechat/controller/MenuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1117">
-          <caret line="175" column="13" lean-forward="false" selection-start-line="175" selection-start-column="13" selection-end-line="175" selection-end-column="13" />
-          <folding>
-            <element signature="docComment;class#MenuController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/imwork/wechat/utils/EncodeUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -1535,9 +1571,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/WeChatTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="55" column="5" lean-forward="false" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+        <state relative-caret-position="138">
+          <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="70" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/imwork/wechat/controller/MenuController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21">
+          <caret line="77" column="41" lean-forward="true" selection-start-line="77" selection-start-column="41" selection-end-line="77" selection-end-column="41" />
+          <folding>
+            <element signature="docComment;class#MenuController#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
